@@ -1,0 +1,28 @@
+---
+title: "HW_3"
+author: "Benjamin Ramsey"
+date: "2/12/2021"
+output: pdf_document
+---
+  The variables I chose to look at in the data set were project cost and the how much incentive (in terms of dollars) the project received. These data were collected by the New York State Energy Research and Development Authority. I chose to focus projects designated as Commercial or Industrial because there are fewer of them. There are some missing values because not all of the data was available. I omitted all the missing values, since they are not useful in any analyses. The data are extremely right-tailed, as shown by the histograms.     
+
+```{r}
+library(tidyverse)
+
+library(tinytex)
+
+Solar_Electric_Programs_NYSERDA <- read_csv("Solar_Electric_Programs_NYSERDA.csv")
+
+Cost.Incentive <- filter(Solar_Electric_Programs_NYSERDA, `Program Type` == "Commercial/Industrial (Competitive)") %>% select(`Project Cost`, `$Incentive`) %>% na.omit()
+
+summarize(Cost.Incentive, mean(`Project Cost`), median(`Project Cost`), mean(`$Incentive`),  median(`$Incentive`))
+
+ggplot(data = Cost.Incentive) +
+  geom_histogram(mapping = aes(`Project Cost`)) +
+  scale_x_log10()
+
+ggplot(data = Cost.Incentive) + 
+  geom_histogram(mapping = aes(`$Incentive`)) +
+  scale_x_log10()
+```
+

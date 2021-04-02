@@ -1,0 +1,36 @@
+---
+title: "HW_4"
+author: "Benjamin Ramsey"
+date: "3/8/2021"
+output: pdf_document
+---
+  This is a visualization of solar energy project costs and their associated money incentives as reported to the New York State Energy Research and Development Authority. These projects were designated as commercial or industrial. These visualizations demonstrate the number of projects' cost and incentive at each dollar amount. I chose them because it allows you to see how the data are distributed. I could have done a histogram, but I liked the look of the dot plot and there weren't so many data points as to make a dot plot unfeasible.           
+
+```{r}
+library(tidyverse)
+
+library(tinytex)
+```
+
+```{r}
+Solar_Electric_Programs <- read_csv("Solar_Electric_Programs_NYSERDA.csv")
+
+Cost.Incentive <- filter(Solar_Electric_Programs, `Program Type` == "Commercial/Industrial (Competitive)") %>% select(`Project Cost`, `$Incentive`) %>% na.omit()
+```
+```{r}
+ggplot(data = Cost.Incentive) + 
+  geom_dotplot(binwidth = .046, mapping = aes(`Project Cost`), fill = "blue") +
+  scale_x_log10() +
+  scale_y_continuous(NULL, breaks = NULL) +
+  labs(x = "Cost") + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank())
+
+ggplot(data = Cost.Incentive) +
+  geom_dotplot(binwidth = .058, mapping = aes(`$Incentive`), fill = "yellow") +
+  scale_x_log10() +
+  scale_y_continuous(NULL, breaks = NULL) +
+  labs(x = "Incentive") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank())
+```

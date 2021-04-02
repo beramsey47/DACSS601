@@ -1,0 +1,16 @@
+---
+title: "HW_2"
+author: "Benjamin Ramsey"
+date: "2/12/2021"
+output: pdf_document
+---
+
+This is a data set containing data about projects that have been completed or are in development associated with the solar incentive program run by the New York State Energy Research and Development Authority beginning in the year 2000. 
+
+```{r}
+library(tidyverse)
+library(tinytex)
+Solar_Electric_Programs_NYSERDA <- read.csv("Solar_Electric_Programs_NYSERDA.csv", header=T)
+head(Solar_Electric_Programs_NYSERDA)
+dim(Solar_Electric_Programs_NYSERDA)
+```
