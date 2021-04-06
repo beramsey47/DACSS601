@@ -1,0 +1,35 @@
+---
+title: "HW_5"
+author: "Benjamin Ramsey"
+date: "3/23/2021"
+output: pdf_document
+--- 
+
+This is a visualization of solar energy project costs and their associated money incentives as reported to the New York State Energy Research and Development Authority. These projects were designated as commercial or industrial.
+
+```{r}
+library(tidyverse)
+
+library(tinytex)
+```
+
+```{r}
+Solar_Electric_Programs <- read_csv("Solar_Electric_Programs_NYSERDA.csv")
+
+Cost_Incentive <- filter(Solar_Electric_Programs, `Program Type` == "Commercial/Industrial (Competitive)") %>% select(`Project Cost`, `$Incentive`) %>% na.omit()
+```
+
+```{r}
+summarize(Cost_Incentive, mean(`Project Cost`), median(`Project Cost`), mean(`$Incentive`), median(`$Incentive`))
+```
+
+My hypothesis is that there is positive relationship between project cost and the amount of incentive it received because bigger projects require more funding. 
+   
+```{r}
+ggplot(data = Cost_Incentive) +
+  geom_point(mapping = aes(x = `Project Cost`, y = `$Incentive`), alpha = .3) +
+  labs(x = 'Cost', y = 'Incentive')
+
+cor.test(Cost_Incentive$`Project Cost`, Cost_Incentive$`$Incentive`)
+```
+The scatterplot of cost against incentive shows a strong positive realtionship between the two variables. The correlation coefficient is 0.87, also indicating a strong positive relationship between project cost and incentive amount.
